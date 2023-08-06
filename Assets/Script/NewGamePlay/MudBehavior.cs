@@ -9,7 +9,7 @@ public enum MudState
 public class MudBehavior : MonoBehaviour
 {
     private GamePlayController controller;
-    [SerializeField] private List<Transform> mudObjects;
+    [SerializeField] private List<GameObject> mudObjects;
     public GameItemId gameItemId;
     public int id;
     public float time = 0;
@@ -19,26 +19,30 @@ public class MudBehavior : MonoBehaviour
     private bool isEnter;
     public PopUpAction popUpAction;
 
+    GameItemId cacheIdItem;
+
     private void Start()
     {
         isEnter = false;
         controller = GameObject.Find("Controller").GetComponent<GamePlayController>();
 
     }
-    public void Plant()
+    public void Plant(GameItemId idpalnt)
     {
         if (mudState != MudState.PLANTING)
         {
             bool rs = true; //PlayerProfile.Instance.DecreaseCoin(200);
-            bool rs1 = true; //PlayerProfile.Instance.UseGameItem(gameItemId);
-
+            bool rs1 = true; //PlidpalntayerProfile.Instance.UseGameItem(gameItemId);
+            cacheIdItem = idpalnt;
+            Debug.Log(popUpAction.Plant_Id);
             if (rs && rs1)
             {
                 //Instantiate(DataManger.Instance.GetItemPrefab(popUpAction.PlantId));
                 //SpawnPlant(popUpAction.PlantId,)
-                foreach (Transform data in mudObjects)
+                foreach (GameObject data in mudObjects)
                 {
-                    SpawnPlant(popUpAction.PlantId, data.position.x, data.position.y, data.position.z);
+                    //Destroy(data);
+                    SpawnPlant(idpalnt, data.transform.position.x, data.transform.position.y, data.transform.position.z);
                 }
                 mudState = MudState.PLANTING;
                 time = 0;
@@ -59,13 +63,24 @@ public class MudBehavior : MonoBehaviour
         if (mudState == MudState.DONE)
         {
             PlayerProfile.Instance.IncreaseCoin(1000);
-            PlayerProfile.Instance.AddGameItem(gameItemId, 10);
+            PlayerProfile.Instance.AddGameItem(cacheIdItem, 10);
+            cacheIdItem = GameItemId.NONE;
             mudState = MudState.NONE;
             time = 0;
-            float scaleVal = 0.01f;
-            foreach (Transform item in mudObjects)
+            float scaleVal = 0.001f;
+            foreach (GameObject item in mudObjects)
             {
-                item.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+                /*
+                Component[] components = gameObject.GetComponents<Component>();
+                foreach (Component component in components)
+                {
+                    if (!(component is Transform))
+                    {
+                        Destroy(component);
+                    }
+                }*/
+
+                item.transform.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
             }
         }
     }
@@ -75,19 +90,22 @@ public class MudBehavior : MonoBehaviour
         if (mudState == MudState.PLANTING)
         {
             time += Time.deltaTime;
-        }
-        if (time > completeTime)
-        {
-            mudState = MudState.DONE;
-        }
-        else
-        {
-            var scaleVal = time / completeTime * mudScale;
-            foreach (Transform item in mudObjects)
+            if (time > completeTime)
             {
-                item.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+                mudState = MudState.DONE;
+            }
+            else
+            {
+                Debug.Log("update");
+                var scaleVal = time / completeTime * mudScale;
+                foreach (GameObject item in mudObjects)
+                {
+                    Debug.Log(item);
+                    item.transform.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+                }
             }
         }
+
     }
     private void OnTriggerEnter(Collider other)
     {

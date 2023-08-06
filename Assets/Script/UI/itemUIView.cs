@@ -13,6 +13,8 @@ public class itemUIView : MonoBehaviour
         Number.gameObject.SetActive(true);
         Img.sprite = DataManger.Instance.GetItemSprite(gameItem.Id);
         Number.text = gameItem.Number.ToString();
+        Debug.Log(gameItem.Id);
+        Debug.Log(gameItem.PrefabPlant);
     }
     public void Hide()
     {

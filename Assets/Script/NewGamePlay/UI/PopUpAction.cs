@@ -13,7 +13,8 @@ public class PopUpAction : MonoBehaviour
     [SerializeField] private Button btTrongCay5;
     [SerializeField] private TextMeshProUGUI txtMessage;
 
-    public GameItemId PlantId;
+    private GameItemId PlantId;
+    public GameItemId Plant_Id;
     public GameItemId Id1;
     public GameItemId Id2;
     public GameItemId Id3;
@@ -32,16 +33,18 @@ public class PopUpAction : MonoBehaviour
                     delegate
                     {
                         PlantId = Id1;
-                        mud.Plant();
+                        mud.Plant(Id1);
                         PanelPlant.gameObject.SetActive(false);
                         txtMessage.gameObject.SetActive(true);
-                        Debug.Log(PlantId);
+                        SetPlantId(Id1);
+                        Debug.Log(Plant_Id);
                     });
                 btTrongCay2.onClick.RemoveAllListeners();
                 btTrongCay2.onClick.AddListener(
                     delegate
                     {
-                        mud.Plant();
+                        PlantId = Id2;
+                        mud.Plant(Id2);
                         PanelPlant.gameObject.SetActive(false);
                         txtMessage.gameObject.SetActive(true);
                     });
@@ -49,7 +52,8 @@ public class PopUpAction : MonoBehaviour
                 btTrongCay3.onClick.AddListener(
                     delegate
                     {
-                        mud.Plant();
+                        PlantId = Id3;
+                        mud.Plant(Id3);
                         PanelPlant.gameObject.SetActive(false);
                         txtMessage.gameObject.SetActive(true);
                     });
@@ -57,7 +61,8 @@ public class PopUpAction : MonoBehaviour
                 btTrongCay4.onClick.AddListener(
                     delegate
                     {
-                        mud.Plant();
+                        PlantId = Id4;
+                        mud.Plant(Id4);
                         PanelPlant.gameObject.SetActive(false);
                         txtMessage.gameObject.SetActive(true);
                     });
@@ -65,7 +70,8 @@ public class PopUpAction : MonoBehaviour
                 btTrongCay5.onClick.AddListener(
                     delegate
                     {
-                        mud.Plant();
+                        PlantId = Id5;
+                        mud.Plant(Id5);
                         PanelPlant.gameObject.SetActive(false);
                         txtMessage.gameObject.SetActive(true);
                     });
@@ -103,5 +109,13 @@ public class PopUpAction : MonoBehaviour
             default:
                 break;
         }
+    }
+    public void SetPlantId(GameItemId newId)
+    {
+        Plant_Id = newId;
+    }
+    public GameItemId GetPlantId()
+    {
+        return Plant_Id;
     }
 }
