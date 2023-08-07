@@ -100,8 +100,9 @@ public class MudBehavior : MonoBehaviour
                 var scaleVal = time / completeTime * mudScale;
                 foreach (GameObject item in mudObjects)
                 {
-                    Debug.Log(item);
+
                     item.transform.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+                    Debug.Log(scaleVal);
                 }
             }
         }
