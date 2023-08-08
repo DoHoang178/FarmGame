@@ -23,6 +23,10 @@ public class PlayerProfile : ISingleton<PlayerProfile>
             GameItems = new List<GameItem>()
             {
                 new GameItem() { Id = GameItemId.ITEM_01,Number=10, Name = "item1" },
+                new GameItem() { Id = GameItemId.ITEM_02,Number=10, Name = "item1" },
+                new GameItem() { Id = GameItemId.ITEM_03,Number=10, Name = "item1" },
+                new GameItem() { Id = GameItemId.ITEM_04,Number=10, Name = "item1" },
+                new GameItem() { Id = GameItemId.ITEM_05,Number=10, Name = "item1" },
 
 
             }

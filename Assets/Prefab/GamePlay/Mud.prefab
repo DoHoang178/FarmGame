@@ -210,7 +210,7 @@ MonoBehaviour:
   id: 0
   time: 0
   mudState: 0
-  completeTime: 10
+  completeTime: 30
   mudScale: 0.8
   popUpAction: {fileID: 5183645382633814907, guid: e91d0fe2b8e9e6d4db249e76309a6bb6, type: 3}
 --- !u!1 &2273810745205532058

@@ -31,8 +31,8 @@ public class MudBehavior : MonoBehaviour
     {
         if (mudState != MudState.PLANTING)
         {
-            bool rs = true; //PlayerProfile.Instance.DecreaseCoin(200);
-            bool rs1 = true; //PlidpalntayerProfile.Instance.UseGameItem(gameItemId);
+            bool rs = PlayerProfile.Instance.DecreaseCoin(1000);
+            bool rs1 = true; //PlayerProfile.Instance.UseGameItem(gameItemId);
             cacheIdItem = idpalnt;
             Debug.Log(popUpAction.Plant_Id);
             if (rs && rs1)
@@ -42,7 +42,8 @@ public class MudBehavior : MonoBehaviour
                 foreach (GameObject data in mudObjects)
                 {
                     //Destroy(data);
-                    SpawnPlant(idpalnt, data.transform.position.x, data.transform.position.y, data.transform.position.z);
+                    SpawnPlant(idpalnt, data.transform.position.x, data.transform.position.y, data.transform.position.z, mudObjects[mudObjects.IndexOf(data)].transform);
+
                 }
                 mudState = MudState.PLANTING;
                 time = 0;
@@ -67,20 +68,9 @@ public class MudBehavior : MonoBehaviour
             cacheIdItem = GameItemId.NONE;
             mudState = MudState.NONE;
             time = 0;
-            float scaleVal = 0.001f;
             foreach (GameObject item in mudObjects)
             {
-                /*
-                Component[] components = gameObject.GetComponents<Component>();
-                foreach (Component component in components)
-                {
-                    if (!(component is Transform))
-                    {
-                        Destroy(component);
-                    }
-                }*/
-
-                item.transform.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+                Destroy(item.transform.GetChild(0).gameObject);
             }
         }
     }
@@ -124,8 +114,9 @@ public class MudBehavior : MonoBehaviour
             controller.HideMenuAction(this);
         }
     }
-    public void SpawnPlant(GameItemId id, float x, float y, float z)
+    public void SpawnPlant(GameItemId id, float x, float y, float z, Transform parent)
     {
-        Instantiate(DataManger.Instance.GetItemPrefab(id), new Vector3(x, y, z), Quaternion.identity);
+        var plt = Instantiate(DataManger.Instance.GetItemPrefab(id), new Vector3(x, y, z), Quaternion.identity);
+        plt.transform.SetParent(parent);
     }
 }

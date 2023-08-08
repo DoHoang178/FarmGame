@@ -92,15 +92,7 @@ public class PopUpAction : MonoBehaviour
                     {
                         mud.Harvest();
                         PanelPlant.gameObject.SetActive(true);
-                        /*
-                        btTrongCay.onClick.RemoveAllListeners();
-                        btTrongCay.onClick.AddListener(
-                            delegate
-                            {
-                                mud.Plant();
-                                btTrongCay.gameObject.SetActive(false);
-                                txtMessage.gameObject.SetActive(true);
-                            });*/
+
                         btTrongCay1.onClick.RemoveAllListeners();
                         btTrongCay1.onClick.AddListener(
                             delegate
